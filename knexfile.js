@@ -15,12 +15,13 @@ module.exports = {
   staging: {
     client: 'pg',
     connection: process.env.DATABASE_URL,
+    searchPath: ['knex', 'public'],
     pool: {
       min: 2,
       max: 5
     },
     migrations: {
-      directory: __dirname + '/src/database/migrations',
+      directory: __dirname + '/src/database/migrations/',
     },
     ssl: {
       rejectUnauthorized: false
@@ -35,7 +36,7 @@ module.exports = {
       max: 10
     },
     migrations: {
-      directory: __dirname + '/src/database/migrations',
+      directory: __dirname + '/src/database/migrations/',
     },
     ssl: {
       rejectUnauthorized: false,
