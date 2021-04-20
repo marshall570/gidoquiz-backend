@@ -3,7 +3,7 @@ require('dotenv/config')
 const knex = require('knex')
 const configs = require('../../knexfile')
 
-const connection = knex(configs[process.env.APP_ENV])
+const connection = knex(configs[process.env.NODE_ENV])
 
 connection.migrate.latest([configs])
 
