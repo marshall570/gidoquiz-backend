@@ -14,7 +14,7 @@ module.exports = {
 
   staging: {
     client: 'pg',
-    connection: process.env.DATABASE_URL,
+    connection: process.env.DATABASE_URL + '?sslmode=require',
     searchPath: ['knex', 'public'],
     pool: {
       min: 2,
@@ -27,10 +27,11 @@ module.exports = {
       rejectUnauthorized: false
     }
   },
-  
+
   production: {
     client: 'pg',
-    connection: process.env.DATABASE_URL,
+    connection: process.env.DATABASE_URL + '?sslmode=require',
+    searchPath: ['knex', 'public'],
     pool: {
       min: 2,
       max: 10
