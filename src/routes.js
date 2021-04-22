@@ -18,6 +18,7 @@ routes.get('/game', celebrate({
 
 routes.post('/game', celebrate({
     [Segments.BODY]: Joi.object().keys({
+        numero: Joi.number().min(1),
         pergunta: Joi.string().required(),
         alt_a: Joi.string().required(),
         alt_b: Joi.string().required(),

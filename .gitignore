@@ -1,3 +1,5 @@
 node_modules/
-*.sqlite
 .env
+src/controller/old_game_controller.js
+*database*
+knexfile.js

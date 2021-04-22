@@ -1,67 +1,49 @@
-const connection = require('../database/connection')
+const Pergunta = require('../models/Perguntas')
 
 module.exports = {
     async insert(request, response) {
-        try {
-            const { pergunta, alt_a, alt_b, alt_c, alt_d, resposta, equipe } = request.body
+        const { pergunta, alt_a, alt_b, alt_c, alt_d, resposta, equipe } = request.body
+        
+        const last_question = await Pergunta.countDocuments()
+        const numero = last_question + 1
 
-            await connection('perguntas').insert({
-                pergunta,
-                alt_a,
-                alt_b,
-                alt_c,
-                alt_d,
-                resposta,
-                equipe
-            })
+        await Pergunta.create({
+            numero,
+            pergunta,
+            alt_a,
+            alt_b,
+            alt_c,
+            alt_d,
+            resposta,
+            equipe
+        })
 
-            return response.status(201).send()
-        } catch (error) {
-            console.error(error)
-        }
+        return response.status(201).send()
     },
 
     async select(request, response) {
-        try {
-            const { qid } = request.query
+        const { qid } = request.query
+        
+        const question = await Pergunta.findOne({numero: qid})
 
-            const question = await connection('perguntas')
-                .where('id', qid)
-                .select('pergunta', 'alt_a', 'alt_b', 'alt_c', 'alt_d', 'resposta', 'equipe')
-
-            return response.json(question)
-        } catch (error) {
-            console.error(error)
-        }
+        return response.json(question)
     },
 
     async total(request, response) {
-        try {
-            const [{ total }] = await connection('perguntas').count('id', { as: 'total' })
+        const query_result = await Pergunta.countDocuments()
 
-            return response.json({ total_perguntas: total })
-        } catch (error) {
-            console.error(error)
-        }
+        return response.json({ total_perguntas: query_result })
     },
 
     async nuke(request, response) {
-        try {
-            await connection('perguntas').truncate()
-    
-            return response.status(204).send()
-        } catch (error) {
-            console.error(error)
-        }
+        await Pergunta.deleteMany()
+
+        return response.status(204).send()
     },
 
     async select_all(request, response) {
-        try {
-            const question = await connection('perguntas').select('*')
-            
-            return response.json(question)
-        } catch (error) {
-            console.error(error)
-        }
+        const perguntas = await Pergunta.find()
+
+        return response.json(perguntas)
     }
 }
