@@ -12,28 +12,11 @@ module.exports = {
     useNullAsDefault: true,
   },
 
-  staging: {
-    client: 'pg',
-    connection: process.env.DATABASE_URL + '?sslmode=require',
-    searchPath: ['knex', 'public'],
-    pool: {
-      min: 2,
-      max: 5
-    },
-    migrations: {
-      directory: __dirname + '/src/database/migrations/',
-    },
-    ssl: {
-      rejectUnauthorized: false
-    }
-  },
-
   production: {
     client: 'pg',
-    connection: process.env.DATABASE_URL + '?sslmode=require',
-    searchPath: ['knex', 'public'],
+    connection: process.env.DATABASE_URL,
     pool: {
-      min: 2,
+      min: 0,
       max: 10
     },
     migrations: {

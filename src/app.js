@@ -6,6 +6,7 @@ const routes = require('./routes')
 const app = express()
 
 app.use(errors())
+app.use(express.urlencoded())
 app.use(express.json())
 app.use(routes)
 
