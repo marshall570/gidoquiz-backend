@@ -23,9 +23,9 @@ module.exports = {
     },
 
     async select(request, response) {
-        const { qid } = request.query
+        const { qid, tn } = request.query
 
-        const question = await Pergunta.findOne({ numero: qid })
+        const question = await Pergunta.findOne({ numero: qid, equipe: tn })
 
         return response.json(question)
     },
