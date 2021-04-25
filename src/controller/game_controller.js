@@ -3,7 +3,7 @@ const Pergunta = require('../models/Perguntas')
 module.exports = {
     async insert(request, response) {
         const { pergunta, alt_a, alt_b, alt_c, alt_d, resposta, equipe } = request.body
-        
+
         const last_question = await Pergunta.countDocuments()
         const numero = last_question + 1
 
@@ -23,8 +23,8 @@ module.exports = {
 
     async select(request, response) {
         const { qid } = request.query
-        
-        const question = await Pergunta.findOne({numero: qid})
+
+        const question = await Pergunta.findOne({ numero: qid })
 
         return response.json(question)
     },
@@ -42,7 +42,9 @@ module.exports = {
     },
 
     async select_all(request, response) {
-        const perguntas = await Pergunta.find()
+        const { tn } = request.query
+
+        const perguntas = await Pergunta.find({ equipe: tn })
 
         return response.json(perguntas)
     }

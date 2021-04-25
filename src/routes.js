@@ -30,6 +30,10 @@ routes.post('/game', celebrate({
 }), game_controller.insert)
 
 routes.delete('/nuke', game_controller.nuke)
-routes.get('/questions', game_controller.select_all)
+routes.get('/questions', celebrate({
+    [Segments.QUERY]: Joi.object().keys({
+        tn: Joi.string().required()
+    })
+}), game_controller.select_all)
 
 module.exports = routes
