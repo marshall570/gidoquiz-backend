@@ -8,11 +8,16 @@ routes.get('/', function (req, res) {
     res.send('servidor ativo')
 })
 
-routes.get('/total', game_controller.total)
+routes.get('/total', celebrate({
+    [Segments.QUERY]: Joi.object().keys({
+        tn: Joi.string().required()
+    })
+}), game_controller.total)
 
 routes.get('/game', celebrate({
     [Segments.QUERY]: Joi.object().keys({
-        qid: Joi.number().min(1)
+        qid: Joi.number().min(1),
+        tn: Joi.string().required()
     })
 }), game_controller.select)
 
