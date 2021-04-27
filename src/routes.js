@@ -4,10 +4,6 @@ const routes = express.Router()
 
 const game_controller = require('./controller/game_controller')
 
-routes.get('/', function (req, res) {
-    res.send('servidor ativo')
-})
-
 routes.get('/total', celebrate({
     [Segments.QUERY]: Joi.object().keys({
         tn: Joi.string().required()
@@ -23,7 +19,6 @@ routes.get('/game', celebrate({
 
 routes.post('/game', celebrate({
     [Segments.BODY]: Joi.object().keys({
-        numero: Joi.number().min(1),
         pergunta: Joi.string().required(),
         alt_a: Joi.string().required(),
         alt_b: Joi.string().required(),
@@ -34,7 +29,6 @@ routes.post('/game', celebrate({
     })
 }), game_controller.insert)
 
-routes.delete('/nuke', game_controller.nuke)
 routes.get('/questions', celebrate({
     [Segments.QUERY]: Joi.object().keys({
         tn: Joi.string().required()

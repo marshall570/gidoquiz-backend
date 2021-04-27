@@ -37,12 +37,6 @@ module.exports = {
         return response.json({ total_perguntas: query_result })
     },
 
-    async nuke(request, response) {
-        await Pergunta.deleteMany()
-
-        return response.status(204).send()
-    },
-
     async select_all(request, response) {
         const { tn } = request.query
 
